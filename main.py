@@ -28,13 +28,16 @@ if st.button("Calculate"):
     d2 = calcd2(d1,sigma,t)
 
 
-
+    #Calculation for call option pricing
     nd1 = NormalDist(mu=0, sigma=1).cdf(d1)
     nd2 = NormalDist(mu=0, sigma=1).cdf(d2)
-
-
     z = r*t
     c = (s*nd1)- (x*math.exp(-z)*nd2)
+
+    #calculation for put option pricing
+    pd1 =NormalDist(mu=0, sigma=1).cdf(-d1)
+    pd2 = NormalDist(mu=0, sigma=1).cdf(-d2)
+    p = (x*math.exp(-z)*pd2) - s*pd1    
 
 
     font_size = 30
@@ -46,8 +49,14 @@ if st.button("Calculate"):
     color:green;
     
     }}
+    p.b{{
+    font: bold {font_size}px Courier;
+    color:blue;
+    
+    }}
     </style>
     <p class="a">CALL : {c}</p>
+    <p class="b">PUT : {p}</p>
     """
 
     st.markdown(html_str, unsafe_allow_html=True)
